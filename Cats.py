@@ -11,6 +11,7 @@ def load_image(url):
         response.raise_for_status() # нужна для обработки исключений
         image_data = BytesIO(response.content)
         img = Image.open(image_data)
+        img.thumbnail((600, 480), Image.Resampling.LANCZOS) # изменяем размер загружаемой картинки, чтобы окно вывода оставалось не большим.
         return ImageTk.PhotoImage(img) # если все ок, функция вернет картинку
     except Exception as e:
         print(f"Произошла ошибка: {e}")

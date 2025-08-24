@@ -2,11 +2,10 @@ from tkinter import*
 from PIL import Image, ImageTk
 import requests
 from io import BytesIO
-
 from bottle import response
 
 
-def load_image():
+def load_image(url):
     try:
         response = requests.get(url)
         response.raise_for_status() # нужна для обработки исключений
@@ -18,18 +17,26 @@ def load_image():
         return None  # если ошибка, то функция ничего не вернет
 
 
+def set_image():
+    img = load_image(url)
+
+    if img:
+        label.config(image=img)
+        label.image = img
+
+
 window = Tk()
 window.title("Cats!")
-window.geometry("600X480")
+window.geometry()
 
 label = Label()
 label.pack()
 
-url = "https://cataas.com/cat"
-img = load_image(url)
+update_button = Button(text="обновить", command=set_image)
+update_button.pack()
 
-if img:
-    label.config(image=img)
-    label.image = img
+url = "https://cataas.com/cat"
+
+set_image() # чтобы появилась первая картинка при запуске проекта
 
 window.mainloop()

@@ -1,4 +1,4 @@
-rom tkinter import*
+from tkinter import*
 from PIL import Image, ImageTk
 import requests
 from io import BytesIO
@@ -18,11 +18,15 @@ def load_image(url):
         return None  # если ошибка, то функция ничего не вернет
 
 
-def set_image():
+def open_new_window(): # название ф-ции нужно давать такое, что понятно что делает
     img = load_image(url)
 
     if img:
-        label.config(image=img)
+        new_window = Toplevel()
+        new_window.title("картинка с котиком")
+        new_window.geometry()
+        label = Label(new_window, image=img)
+        label.pack()
         label.image = img
 
 
@@ -34,15 +38,12 @@ window = Tk()
 window.title("Cats!")
 window.geometry()
 
-label = Label()
-label.pack()
-
 menu_bar = Menu(window)
 window.config(menu=menu_bar)
 
 file_menu = Menu(menu_bar, tearoff=0)
 menu_bar.add_cascade(label="Файл", menu=file_menu)
-file_menu.add_command(label="Загрузить фото", command=set_image)
+file_menu.add_command(label="Загрузить фото", command=open_new_window)
 file_menu.add_separator()
 file_menu.add_command(label="Выход", command=exit)
 
